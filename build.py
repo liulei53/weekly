@@ -4,7 +4,7 @@ import re
 import urllib.parse
 
 def fetch_ci_time(file_path):
-    url = f"https://api.github.com/repos/tw93/weekly/commits?path={file_path}&page=1&per_page=1"
+    url = f"https://api.github.com/repos/liulei53/weekly/commits?path={file_path}&page=1&per_page=1"
     response = httpx.get(url)
     ci_time = response.json()[0]["commit"]["committer"]["date"].split("T")[0]
     return ci_time
@@ -20,7 +20,7 @@ if __name__ == "__main__":
             if name.endswith('.md'):
                 file_path = urllib.parse.quote(name)
                 old_title = name.split('.md')[0]
-                url = f'https://weekly.tw93.fun/posts/{old_title}'
+                url = f'https://weekly.liulei.org/posts/{old_title}'
                 title = f'第 {old_title.split("-")[0]} 期 - {old_title.split("-")[1]}'
                 readme_md = f'* [{title}]({url})\n'
                 num = int(old_title.split('-')[0])
