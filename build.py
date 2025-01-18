@@ -6,7 +6,11 @@ import urllib.parse
 def fetch_ci_time(file_path):
     url = f"https://api.github.com/repos/liulei53/weekly/commits?path={file_path}&page=1&per_page=1"
     response = httpx.get(url)
-    ci_time = response.json()[0]["commit"]["committer"]["date"].split("T")[0]
+    #ci_time = response.json()[0]["commit"]["committer"]["date"].split("T")[0]
+    #过滤掉上游作者的commit记录，下次push时验证一下下面代码是否生效
+    if response.json()[0]["commit"]["committer"]["name"] == "liulei53":
+        ci_time = response.json()[0]["commit"]["committer"]["date"].split("T")[0]
+        
     return ci_time
 
 if __name__ == "__main__":
@@ -31,3 +35,4 @@ if __name__ == "__main__":
                     recent_file.write(recent_md)
 
                 readme_file.write(readme_md)
+
